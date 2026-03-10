@@ -52,10 +52,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage    = "https://github.com/LCherryholmes/SNOBOL4python"
-Repository  = "https://github.com/LCherryholmes/SNOBOL4python"
-Issues      = "https://github.com/LCherryholmes/SNOBOL4python/issues"
-Changelog   = "https://github.com/LCherryholmes/SNOBOL4python/blob/main/CHANGELOG.md"
+Homepage    = "https://github.com/SNOBOL4-plus/SNOBOL4-python"
+Repository  = "https://github.com/SNOBOL4-plus/SNOBOL4-python"
+Issues      = "https://github.com/SNOBOL4-plus/SNOBOL4-python/issues"
+Changelog   = "https://github.com/SNOBOL4-plus/SNOBOL4-python/blob/main/CHANGELOG.md"
 
 # ── setuptools package discovery ─────────────────────────────────────────────
 
