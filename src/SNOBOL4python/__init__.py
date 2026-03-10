@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# SNOBOL4python 0.5.0
+# SNOBOL4python 0.5.1
 #
 # The SNOBOL4 environment (variable namespace) is a single flat dict kept in
 # _env._g.  Set it once with GLOBALS(globals()); all pattern assignments,
@@ -32,7 +32,7 @@ from .SNOBOL4functions import (
     END, RETURN, FRETURN, NRETURN,
 )
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 __author__  = 'Lon Jones Cherryholmes'
 
 __all__ = [

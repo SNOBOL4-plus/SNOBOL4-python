@@ -5,7 +5,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [0.5.0] — unreleased
+## [0.5.1] — 2026-03-10
+
+### Changed
+- Project URLs updated to canonical home at https://github.com/SNOBOL4-plus/SNOBOL4-python
+
+---
+
+## [0.5.0] — 2026-03-03
 
 ### Added
 - Dual-backend architecture: C/SPIPAT (7–11× faster) and pure-Python fallback

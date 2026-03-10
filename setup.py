@@ -40,7 +40,7 @@ def get_sno4py_extension():
 
 setup(
     name="SNOBOL4python",
-    version="0.5.0",
+    version="0.5.1",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     ext_modules=[get_sno4py_extension()],
