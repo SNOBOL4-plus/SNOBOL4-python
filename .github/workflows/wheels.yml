@@ -58,8 +58,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install cibuildwheel
-        run: pip install cibuildwheel==2.22.0
+      - name: Install uv and cibuildwheel
+        run: pip install uv cibuildwheel==2.22.0
 
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
