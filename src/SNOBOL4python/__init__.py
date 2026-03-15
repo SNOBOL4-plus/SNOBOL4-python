@@ -32,7 +32,7 @@ from .SNOBOL4functions import (
     END, RETURN, FRETURN, NRETURN,
 )
 
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 __author__  = 'Lon Jones Cherryholmes'
 
 __all__ = [

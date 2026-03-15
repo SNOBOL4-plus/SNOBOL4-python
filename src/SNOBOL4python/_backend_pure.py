@@ -436,7 +436,52 @@ class BREAK(PATTERN):
             logger.warning("BREAK(%r) backtracking(%d,%d)...", chars, pos0, Ϣ[-1].pos)
             Ϣ[-1].pos = pos0
 #----------------------------------------------------------------------------------------------------------------------
-class BREAKX(BREAK): pass
+class BREAKX(PATTERN):
+    """Like BREAK but on backtrack advances past the break character and rescans.
+
+    Mirrors CSNOBOL4 isnobol4.c L_BRKX / L_BRKXF logic:
+      - L_BRKX: scan forward until a char in the break set is found, yield that
+        position, then push a backtrack frame (L_BRKXF) that remembers where we are.
+      - L_BRKXF: on backtrack, step the cursor ONE past the break character that
+        was matched, then re-enter L_BRKX to find the *next* break character.
+
+    BREAK yields once and fails on backtrack.
+    BREAKX yields at every break-char position until the subject is exhausted.
+    """
+    def __init__(self, chars): super().__init__(); self.chars = chars
+    def __repr__(self): return f"BREAKX({pformat(self.chars)})"
+    def __deepcopy__(self, memo): return BREAKX(self.chars)
+    def γ(self):
+        global Ϣ
+        # Resolve chars once (mirrors L_ABNS charset resolution)
+        chars = self.chars
+        pos0_entry = Ϣ[-1].pos       # save entry position for restore on exhaustion
+        if not isinstance(chars, str):
+            if not isinstance(chars, set):
+                if callable(chars):
+                    chars = chars()
+                else:
+                    chars = str(chars)
+        subject = Ϣ[-1].subject
+        # scan_from mirrors L_BRKX: advance until a break-set char is found
+        # yield that position, then L_BRKXF steps ONE past the break char and loops.
+        scan_pos = Ϣ[-1].pos          # outer cursor at match entry
+        while True:
+            # --- L_BRKX: scan forward from scan_pos to next break char ---
+            p = scan_pos
+            while p < len(subject) and subject[p] not in chars:
+                p += 1
+            if p >= len(subject):
+                break                  # no break char found: exhausted, done
+            # Found a break char at p; yield the span [scan_pos, p)
+            Ϣ[-1].pos = p
+            logger.info("BREAKX(%r) SUCCESS(%d,%d)=%s", chars, scan_pos, p, subject[scan_pos:p])
+            yield slice(scan_pos, p)
+            # --- L_BRKXF: backtrack frame fires; advance ONE past break char ---
+            logger.warning("BREAKX(%r) backtracking, stepping past break char at %d", chars, p)
+            scan_pos = p + 1          # skip the break character (TXSP += ONECL)
+        # All positions exhausted — restore cursor to original entry position (mirrors BREAK)
+        Ϣ[-1].pos = pos0_entry
 #----------------------------------------------------------------------------------------------------------------------
 class NSPAN(PATTERN):
     def __init__(self, chars): super().__init__(); self.chars = chars
